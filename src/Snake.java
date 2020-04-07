@@ -20,7 +20,14 @@ public class Snake {
     
     
     public Snake(int row, int col, int size) { // Initial position of the head of the snake and number of inital nodes
-        // Finish this method
+        Node firstNode = new Node(row,col);
+        body.add(firstNode);
+        for(int i = 1;i<size;i++){
+            Node restOfBody = new Node(row-i,col);
+            body.add(restOfBody);
+        }
+        
+        direction =  Direction.UP;
     }
     
     public boolean canMove(int row, int col) {

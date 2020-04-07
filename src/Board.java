@@ -22,6 +22,7 @@ public class Board extends javax.swing.JPanel {
     private Timer snakeTimer;
     private Timer specialFoodTimer;
     private int DeltaTime;
+    private Node[][] playBoard;
 
     /**
      * Creates new form Board
@@ -32,11 +33,15 @@ public class Board extends javax.swing.JPanel {
     }
     
     private void myInit() {
-        // Finish this method
+        numRows=31;
+        numCols=31;
+        snake= new Snake(14, 14, 4);
+        playBoard = new Node[numRows][numCols];
+        resetPlayBoard();
     }
     
     public Board(int numRows, int numCols) {
-        // Finish this method
+        
     }
     
     public boolean colideFood() {
@@ -46,6 +51,14 @@ public class Board extends javax.swing.JPanel {
     
     public void gameOver() {
         // Finish this method
+    }
+    
+    private void resetPlayBoard() {
+        for(int row =0;row<numRows;row++){
+            for(int col =0; col< numCols;col++){
+                playBoard[row][col]= new Node(row, col);
+            }
+        }
     }
     
     @Override 
@@ -74,6 +87,8 @@ public class Board extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
