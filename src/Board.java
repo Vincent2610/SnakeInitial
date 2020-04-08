@@ -1,6 +1,8 @@
 
+import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Timer;
+import java.awt.Graphics2D;
+import java.util.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -33,15 +35,15 @@ public class Board extends javax.swing.JPanel {
     }
     
     private void myInit() {
-        numRows=31;
-        numCols=31;
-        snake= new Snake(14, 14, 4);
-        playBoard = new Node[numRows][numCols];
-        resetPlayBoard();
+        snake= new Snake(24, 24, 4);  
+        DeltaTime = 500;
     }
     
     public Board(int numRows, int numCols) {
-        
+        this();
+        this.numCols=numCols;
+        this.numRows=numRows;
+        playBoard = new Node[numRows][numCols];
     }
     
     public boolean colideFood() {
@@ -53,18 +55,24 @@ public class Board extends javax.swing.JPanel {
         // Finish this method
     }
     
-    private void resetPlayBoard() {
-        for(int row =0;row<numRows;row++){
-            for(int col =0; col< numCols;col++){
-                playBoard[row][col]= new Node(row, col);
-            }
-        }
+    
+    private int squareWidth() {
+        return getWidth() / numCols;
+    }
+
+    private int squareHeight() {
+        return getHeight() / numRows;
     }
     
     @Override 
     protected void paintComponent(Graphics g)  {
         // Finish this method
         // Paint the Snake and the food here
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        paintPlayBoard(g2d);
+        paintSnake(g2d);
+        paintFood(g2d);
     }
 
     /**
@@ -80,13 +88,47 @@ public class Board extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 356, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 310, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void paintPlayBoard(Graphics2D g2d) {
+        for (int row = 0; row < playBoard.length; row++) {
+            for (int col = 0; col < playBoard[0].length; col++) {
+                drawSquare(g2d, row, col,new Color(51,255,51));
+            }
+        }
+    }
+    
+    private void paintSnake(Graphics2D g2d){
+        List<Node> body = snake.getList();
+        for(Node node:body){
+            drawSquare(g2d, node.getRow(), node.getCol(), new Color(0,51,255));
+        }
+    }
+    
+    private void paintFood(Graphics2D g2d){
+        
+    }
+
+    private void drawSquare(Graphics2D g, int row, int col,Color color) {
+        /*Color colors[] = {new Color(51,255,51), new Color(255,51,51),
+            new Color(0,0,0), new Color(0,51,255),};*/
+        int x = col * squareWidth();
+        int y = row * squareHeight();
+        g.setColor(color);
+        g.fillRect(x + 1, y + 1, squareWidth() - 2, squareHeight() - 2);
+        g.setColor(color.brighter());
+        g.drawLine(x, y + squareHeight() - 1, x, y);
+        g.drawLine(x, y, x + squareWidth() - 1, y);
+        g.setColor(color.darker());
+        g.drawLine(x + 1, y + squareHeight() - 1, x + squareWidth() - 1, y + squareHeight() - 1);
+        g.drawLine(x + squareWidth() - 1, y + squareHeight() - 1, x + squareWidth() - 1, y + 1);
+    }
 
     
 

@@ -1,5 +1,6 @@
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -19,11 +20,12 @@ public class Snake {
     private int remainingNodesToCreate = 0;
     
     
-    public Snake(int row, int col, int size) { // Initial position of the head of the snake and number of inital nodes
+    public Snake(int row, int col, int size) { 
+        body = new ArrayList<>();
         Node firstNode = new Node(row,col);
         body.add(firstNode);
         for(int i = 1;i<size;i++){
-            Node restOfBody = new Node(row-i,col);
+            Node restOfBody = new Node(row+i,col);
             body.add(restOfBody);
         }
         
@@ -41,6 +43,10 @@ public class Snake {
     
     public void move() {
         // Finish this method
+    }
+    
+    public List getList(){
+        return body;
     }
     
     
