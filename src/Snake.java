@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,10 @@ public class Snake {
         return true;
     }
     
-    public void paint(Graphics g, int squareWidth, int squareHeight) {
-        // Finish this method. Call Util.drawSquare()
+    public void paint(Graphics g2d, int squareWidth, int squareHeight) {
+        for(Node node:body){
+            Util.drawSquare(g2d, node.getRow(), node.getCol(), squareWidth, squareHeight, new Color(0,51,255));
+        }
     }
     
     public void move() {
@@ -49,6 +52,11 @@ public class Snake {
         return body;
     }
     
+    public Direction getDirection(){
+        return direction;
+    }
     
-    
+    public void setDirection(Direction direction){
+        this.direction=direction;
+    }
 }
