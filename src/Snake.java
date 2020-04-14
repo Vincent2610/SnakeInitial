@@ -9,54 +9,79 @@ import java.util.List;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author victoralonso
  */
 public class Snake {
-    
+
     private Direction direction;
     private List<Node> body;
     private int remainingNodesToCreate = 0;
-    
-    
-    public Snake(int row, int col, int size) { 
+
+    public Snake(int row, int col, int size) {
         body = new ArrayList<>();
-        Node firstNode = new Node(row,col);
+        Node firstNode = new Node(row, col);
         body.add(firstNode);
-        for(int i = 1;i<size;i++){
-            Node restOfBody = new Node(row+i,col);
+        for (int i = 1; i < size; i++) {
+            Node restOfBody = new Node(row + i, col);
             body.add(restOfBody);
         }
-        
-        direction =  Direction.UP;
+
+        direction = Direction.UP;
     }
-    
+
     public boolean canMove(int row, int col) {
         // Finish this method
         return true;
     }
-    
+
     public void paint(Graphics g2d, int squareWidth, int squareHeight) {
-        for(Node node:body){
-            Util.drawSquare(g2d, node.getRow(), node.getCol(), squareWidth, squareHeight, new Color(0,51,255));
+        for (Node node : body) {
+            Util.drawSquare(g2d, node.getRow(), node.getCol(), squareWidth, squareHeight, new Color(0, 51, 255));
         }
     }
-    
+
     public void move() {
-        // Finish this method
+        Node insert = null;
+        switch (direction) {
+            case UP:
+                insert = new Node(body.get(0).getRow()-1, body.get(0).getCol());
+                break;
+            case DOWN:
+                insert = new Node(body.get(0).getRow()+1, body.get(0).getCol());
+                break;
+            case RIGHT:
+                insert = new Node(body.get(0).getRow(), body.get(0).getCol()+1);
+                break;
+            case LEFT:
+                insert = new Node(body.get(0).getRow() , body.get(0).getCol()-1);
+                break;
+                
+            
+        }
+        body.add(0, insert);
+        /*if (remainingNodesToCreate == 0) {
+            body.remove(body.size() - 1);
+        } else {
+            remainingNodesToCreate--;
+        }*/
+
     }
-    
-    public List getList(){
+
+    public void setRemainingNodesToCreate(int remainingNodesToCreate) {
+        this.remainingNodesToCreate = remainingNodesToCreate;
+    }
+
+    public List getList() {
         return body;
     }
-    
-    public Direction getDirection(){
+
+    public Direction getDirection() {
         return direction;
     }
-    
-    public void setDirection(Direction direction){
-        this.direction=direction;
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 }

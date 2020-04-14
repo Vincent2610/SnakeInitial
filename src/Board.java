@@ -50,7 +50,7 @@ public class Board extends javax.swing.JPanel {
     private Timer snakeTimer;
     private Timer specialFoodTimer;
     private int deltaTime;
-    private Node[][] playBoard;
+    //private Node[][] playBoard;
 
     /**
      * Creates new form Board
@@ -58,29 +58,57 @@ public class Board extends javax.swing.JPanel {
     public Board() {
         initComponents();
         myInit();
-        
+
         snakeTimer = new Timer(deltaTime, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                Node next = nextNode();
+                if (snake.canMove(next.getRow(), next.getCol())) {
+                    snake.move();
+                    repaint();
+                }
             }
+
         });
         
         MyKeyAdapter keyAdepter = new MyKeyAdapter();
         addKeyListener(keyAdepter);
+        snakeTimer.start();
     }
 
     private void myInit() {
         snake = new Snake(24, 24, 4);
         food = new Food(snake);
-        deltaTime = 500;
+        deltaTime = 700;
     }
 
     public Board(int numRows, int numCols) {
         this();
         this.numCols = numCols;
         this.numRows = numRows;
-        playBoard = new Node[numRows][numCols];
+        //playBoard = new Node[numRows][numCols];
+    }
+
+    private Node nextNode() {
+        Node next = (Node) (snake.getList().get(0));
+
+        switch (snake.getDirection()) {
+            case UP:
+                next.setRow(next.getRow()-1);
+                break;
+            case DOWN:
+                next.setRow(next.getRow()+1);
+                break;
+            case RIGHT:
+                next.setCol(next.getCol()+1);
+                break;
+            case LEFT:
+                next.setCol(next.getCol()-1);
+                break;
+
+        }
+
+        return next;
     }
 
     public boolean colideFood() {
@@ -106,7 +134,7 @@ public class Board extends javax.swing.JPanel {
         // Paint the Snake and the food here
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        paintPlayBoard(g2d);
+        //paintPlayBoard(g2d);
         snake.paint(g2d, squareWidth(), squareHeight());
         food.paint(g2d, squareWidth(), squareHeight());
     }
@@ -132,25 +160,13 @@ public class Board extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void paintPlayBoard(Graphics2D g2d) {
+    /*private void paintPlayBoard(Graphics2D g2d) {
         for (int row = 0; row < playBoard.length; row++) {
             for (int col = 0; col < playBoard[0].length; col++) {
                 drawSquare(g2d, row, col, new Color(51, 255, 51));
             }
         }
-    }
-
-    private void paintSnake(Graphics2D g2d) {
-        List<Node> body = snake.getList();
-        for (Node node : body) {
-            drawSquare(g2d, node.getRow(), node.getCol(), new Color(0, 51, 255));
-        }
-    }
-
-    private void paintFood(Graphics2D g2d) {
-
-    }
-
+    }*/
     private void drawSquare(Graphics2D g, int row, int col, Color color) {
         /*Color colors[] = {new Color(51,255,51), new Color(255,51,51),
             new Color(0,0,0), new Color(0,51,255),};*/
