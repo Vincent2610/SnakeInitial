@@ -30,6 +30,8 @@ public class Snake {
 
         direction = Direction.UP;
     }
+    
+    
 
     public boolean canMove(int row, int col) {
         // Finish this method
@@ -61,16 +63,16 @@ public class Snake {
             
         }
         body.add(0, insert);
-        /*if (remainingNodesToCreate == 0) {
+        if (remainingNodesToCreate == 0) {
             body.remove(body.size() - 1);
         } else {
             remainingNodesToCreate--;
-        }*/
+        }
 
     }
 
     public void setRemainingNodesToCreate(int remainingNodesToCreate) {
-        this.remainingNodesToCreate = remainingNodesToCreate;
+        this.remainingNodesToCreate += remainingNodesToCreate;
     }
 
     public List getList() {
