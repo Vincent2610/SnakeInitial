@@ -17,15 +17,10 @@ public class Food {
     private Node position;
     private boolean isSpecial;
     
-    public Food(Snake snake) {
-        // We pass Snake to the constructor because if the randomnly generated food falls on the Snake you have to create another position for the food
-        position = createRandomNode(snake);
-        isSpecial = false;
-        
-    }
+    
     
     public Food(Snake snake, boolean isSpecial) {
-        this(snake);
+        position = createRandomNode(snake);
         this.isSpecial = isSpecial;
     }
     

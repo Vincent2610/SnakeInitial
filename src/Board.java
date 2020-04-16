@@ -51,6 +51,7 @@ public class Board extends javax.swing.JPanel {
     private int deltaTime;
     private int foodDeltaTime;
     private Node next;
+    private boolean specialFoodVisible;
 
     /**
      * Creates new form Board
@@ -66,9 +67,13 @@ public class Board extends javax.swing.JPanel {
                 next = nextNode();
                 gameOver();
                 if (snake.canMove(next.getRow(), next.getCol())) {
-                    if (colideFood()) {
+                    if(colideFood())
+                    if (colideNormalFood()) {
                         snake.setRemainingNodesToCreate(1);
-                        food = new Food(snake);
+                        food = new Food(snake,false);
+                    }else{
+                        snake.setRemainingNodesToCreate(4);
+                        specialFood.delete();
                     }
                     snake.move();
                     repaint();
@@ -81,18 +86,18 @@ public class Board extends javax.swing.JPanel {
         specialFoodTimer = new Timer(foodDeltaTime, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                specialFood = new Food(snake, true);
-                int random = (int) (Math.random() * 5000 + 7000);
-                //contador
-                specialFood.delete();
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        
-                    }
-                });
-                foodDeltaTime = (int)(Math.random()*10000+30000);
-                specialFoodTimer.setDelay(foodDeltaTime);
+                if (!specialFoodVisible) {
+                    specialFood = new Food(snake, true);
+                    specialFoodVisible = true;
+                    int randomTimer = (int) (Math.random() * 10000 + 30000);
+                    specialFoodTimer.setDelay(randomTimer);
+                } else {
+                    specialFood.delete();
+                    specialFoodVisible = false;
+                    int randomTimer = (int) (Math.random() * 5000 + 7000);
+                    specialFoodTimer.setDelay(randomTimer);
+
+                }
                 repaint();
             }
         });
@@ -105,9 +110,10 @@ public class Board extends javax.swing.JPanel {
 
     private void myInit() {
         snake = new Snake(24, 24, 4);
-        food = new Food(snake);
-        deltaTime = 350;
+        food = new Food(snake,false);
+        deltaTime = 200;
         foodDeltaTime = 15000;
+        specialFoodVisible = false;
     }
 
     public Board(int numRows, int numCols) {
@@ -140,17 +146,30 @@ public class Board extends javax.swing.JPanel {
     }
 
     public boolean colideFood() {
+        return colideNormalFood() || colideSpecialFood();
+
+    }
+
+    private boolean colideNormalFood() {
         return food.getPosition().getRow() == next.getRow() && food.getPosition().getCol() == next.getCol();
+    }
+
+    private boolean colideSpecialFood() {
+        if (specialFoodVisible) {
+            return specialFood.getPosition().getRow() == next.getRow() && specialFood.getPosition().getCol() == next.getCol();
+        }
+        return false;
     }
 
     public void gameOver() {
         if (colideBorders() || colideBody()) {
             snakeTimer.stop();
+            specialFoodTimer.stop();
         }
     }
 
     public boolean colideBorders() {
-        return next.getRow() <= 0 || next.getRow() >= numRows || next.getCol() <= 0 || next.getCol() >= numCols;
+        return next.getRow() < 0 || next.getRow() >= numRows || next.getCol() < 0 || next.getCol() >= numCols;
     }
 
     public boolean colideBody() {
@@ -180,6 +199,10 @@ public class Board extends javax.swing.JPanel {
         //paintPlayBoard(g2d);
         snake.paint(g2d, squareWidth(), squareHeight());
         food.paint(g2d, squareWidth(), squareHeight());
+        if (specialFoodVisible) {
+            specialFood.paint(g2d, squareWidth(), squareHeight());
+        }
+
     }
 
     /**
