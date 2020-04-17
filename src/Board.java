@@ -52,7 +52,9 @@ public class Board extends javax.swing.JPanel {
     private int foodDeltaTime;
     private Node next;
     private boolean specialFoodVisible;
-
+    private ScoreBoardIncrementer scoreBard;
+    public static final int  VALOR_COMIDA_NORMAL = 1;
+    public static final int  VALOR_COMIDA_ESPECIAL = 4;
     /**
      * Creates new form Board
      */
@@ -67,13 +69,16 @@ public class Board extends javax.swing.JPanel {
                 next = nextNode();
                 gameOver();
                 if (snake.canMove(next.getRow(), next.getCol())) {
-                    if(colideFood())
-                    if (colideNormalFood()) {
-                        snake.setRemainingNodesToCreate(1);
-                        food = new Food(snake,false);
-                    }else{
-                        snake.setRemainingNodesToCreate(4);
-                        specialFood.delete();
+                    if (colideFood()) {
+                        if (colideNormalFood()) {
+                            snake.setRemainingNodesToCreate(VALOR_COMIDA_NORMAL);
+                            food = new Food(snake, false);
+                            scoreBard.incrementScore(VALOR_COMIDA_NORMAL);
+                        } else {
+                            snake.setRemainingNodesToCreate(VALOR_COMIDA_ESPECIAL);
+                            specialFood.delete();
+                            scoreBard.incrementScore(VALOR_COMIDA_ESPECIAL);
+                        }
                     }
                     snake.move();
                     repaint();
@@ -110,14 +115,15 @@ public class Board extends javax.swing.JPanel {
 
     private void myInit() {
         snake = new Snake(24, 24, 4);
-        food = new Food(snake,false);
+        food = new Food(snake, false);
         deltaTime = 200;
         foodDeltaTime = 15000;
         specialFoodVisible = false;
     }
 
-    public Board(int numRows, int numCols) {
+    public Board(int numRows, int numCols, ScoreBoardIncrementer scb) {
         this();
+        scoreBard=scb;
         this.numCols = numCols;
         this.numRows = numRows;
     }
@@ -183,11 +189,17 @@ public class Board extends javax.swing.JPanel {
     }
 
     private int squareWidth() {
-        return getWidth() / numCols;
+        if (numCols != 0) {
+            return getWidth() / numCols;
+        }
+        return getWidth() /50;
     }
 
     private int squareHeight() {
-        return getHeight() / numRows;
+        if (numRows != 0) {
+            return getHeight()/ numRows;
+        }
+        return getHeight()/50;
     }
 
     @Override
