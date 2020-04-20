@@ -52,24 +52,26 @@ public class Board extends javax.swing.JPanel {
 
     private int numRows;
     private int numCols;
+    private int deltaTime;
+    private int foodDeltaTime;
+    private int timesLevelUp;
+    private boolean specialFoodVisible;
+    private String playerName;
+    private Node next;
+    //private Node[][] playBoard;
     private Snake snake;
     private Food food;
     private Food specialFood;
     private Timer snakeTimer;
     private Timer specialFoodTimer;
-    private int deltaTime;
-    private int foodDeltaTime;
-    private Node next;
-    private boolean specialFoodVisible;
     private ScoreBoardIncrementer scoreBoard;
-    public static final int  VALOR_COMIDA_NORMAL = 1;
-    public static final int  VALOR_COMIDA_ESPECIAL = 4;
-    private String playerName;
     private StartGame startGame;
     private PauseGame pauseGame;
+    public static final int  VALOR_COMIDA_NORMAL = 1;
+    public static final int  VALOR_COMIDA_ESPECIAL = 4;
     public static final int VALOR_RESTA_DELAY_DELTATIME = 25;
-    private int timesLevelUp;
-    //private Node[][] playBoard; 
+    
+     
     /**
      * Creates new form Board
      */
