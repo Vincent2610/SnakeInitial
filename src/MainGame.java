@@ -15,6 +15,8 @@ public class MainGame extends javax.swing.JFrame {
      */
     public MainGame() {
         initComponents();
+        StartGame stg = new StartGame(this, true, board1);
+        stg.setVisible(true);
     }
 
     /**
@@ -27,7 +29,7 @@ public class MainGame extends javax.swing.JFrame {
     private void initComponents() {
 
         scoreBoard2 = new ScoreBoard();
-        board1 = new Board(50,50,scoreBoard2);
+        board1 = new Board(50,50,scoreBoard2,this);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
