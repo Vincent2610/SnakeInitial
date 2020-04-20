@@ -33,10 +33,10 @@ public class Snake {
     
     
 
-    public boolean canMove(int row, int col) {
+    /*public boolean canMove(int row, int col) {
         // Finish this method
         return true;
-    }
+    }*/
 
     public void paint(Graphics g2d, int squareWidth, int squareHeight) {
         for (Node node : body) {

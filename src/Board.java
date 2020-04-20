@@ -69,6 +69,7 @@ public class Board extends javax.swing.JPanel {
     private PauseGame pauseGame;
     public static final int VALOR_RESTA_DELAY_DELTATIME = 25;
     private int timesLevelUp;
+    //private Node[][] playBoard; 
     /**
      * Creates new form Board
      */
@@ -86,7 +87,7 @@ public class Board extends javax.swing.JPanel {
                 } catch (IOException ex) {
                     
                 }
-                if (snake.canMove(next.getRow(), next.getCol())) {
+                //if (snake.canMove(next.getRow(), next.getCol())) {
                     if (colideFood()) {
                         if (colideNormalFood()) {
                             snake.setRemainingNodesToCreate(VALOR_COMIDA_NORMAL);
@@ -101,7 +102,7 @@ public class Board extends javax.swing.JPanel {
                     snake.move();
                     levelUpVelocity();
                     repaint();
-                }
+                //}
 
             }
 
@@ -165,6 +166,7 @@ public class Board extends javax.swing.JPanel {
 
     public Board(int numRows, int numCols, ScoreBoardIncrementer scb,JFrame parent) {
         this();
+        //playBoard = new Node[numRows][numCols];
         scoreBoard=scb;
         startGame = new StartGame(parent, true, this);
         pauseGame = new PauseGame(parent, true, this);
@@ -268,12 +270,21 @@ public class Board extends javax.swing.JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+        //paintPlayBoard(g2d);
         snake.paint(g2d, squareWidth(), squareHeight());
         food.paint(g2d, squareWidth(), squareHeight());
         if (specialFoodVisible) {
             specialFood.paint(g2d, squareWidth(), squareHeight());
         }
     }
+    
+    /*public void paintPlayBoard( Graphics2D g){
+        for (int row =0;row < playBoard.length; row++ ){
+            for(int col = 0;col < playBoard[0].length;col++){
+                drawSquare(g, row, col, Color.PINK);
+            }
+        }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
