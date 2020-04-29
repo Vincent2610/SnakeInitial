@@ -1,7 +1,6 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -36,8 +35,6 @@ public class Food {
     }
 
     private Node createRandomNode(Snake snake, Wall wall) {
-        List<Node> body = snake.getList();
-        List<Node> wallList = wall.getList();
         Boolean in = true;
         int row = 0;
         int col = 0;
@@ -45,7 +42,7 @@ public class Food {
             row = (int) (Math.random() * 50);
             col = (int) (Math.random() * 50);
 
-            if(notCollisionBody(body, row, col) && notCollisionWall(wallList, row, col)){
+            if(!snake.contains(row, col) && !wall.contains(row, col)){
                 in = false;
             }    
         }
@@ -54,25 +51,7 @@ public class Food {
         return food;
     }
 
-    private boolean notCollisionWall(List<Node> wallList, int row, int col) {
-        for (Node node : wallList) {
-            if (row == node.getRow() && col == node.getCol()) {
-                return false;
-            }
-
-        }
-        return true;
-    }
-
-    private boolean notCollisionBody(List<Node> body, int row, int col) {
-        for (Node node : body) {
-            if (row == node.getRow() && col == node.getCol()) {
-                return false;
-            }
-
-        }
-        return true;
-    }
+    
 
     public Node getPosition() {
         return position;

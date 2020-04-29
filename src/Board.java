@@ -59,7 +59,7 @@ public class Board extends javax.swing.JPanel {
     private int foodDeltaTime;
     private int timesLevelUp;
     private boolean specialFoodVisible;
-    private boolean firstWalls;
+    private boolean createdMap;
     private String playerName;
     private Node next;
     //private Node[][] playBoard;
@@ -106,7 +106,12 @@ public class Board extends javax.swing.JPanel {
                         scoreBoard.incrementScore(VALOR_COMIDA_ESPECIAL);
                     }
                 }
+                
                 snake.move();
+                if(!createdMap){
+                    walls.insetNodes();
+                    createdMap=true;
+                }
                 levelUpVelocity();
                 repaint();
                 //}
@@ -144,7 +149,7 @@ public class Board extends javax.swing.JPanel {
         snake = new Snake(24, 24, 4);
         walls = new Wall(snake.getList());
         food = new Food(snake, false,walls);
-        firstWalls = true;
+        createdMap = false;
         deltaTime = 250;
         foodDeltaTime = 15000;
         specialFoodVisible = false;
