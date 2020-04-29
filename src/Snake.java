@@ -46,30 +46,47 @@ public class Snake {
 
     public void move() {
         Node insert = null;
+        int row = body.get(0).getRow();
+        int col = body.get(0).getCol();
         switch (direction) {
             case UP:
-                insert = new Node(body.get(0).getRow()-1, body.get(0).getCol());
+                insert = new Node(row - 1, col);
                 break;
             case DOWN:
-                insert = new Node(body.get(0).getRow()+1, body.get(0).getCol());
+                insert = new Node(row + 1, col);
                 break;
             case RIGHT:
-                insert = new Node(body.get(0).getRow(), body.get(0).getCol()+1);
+                insert = new Node(row, col + 1);
                 break;
             case LEFT:
-                insert = new Node(body.get(0).getRow() , body.get(0).getCol()-1);
+                insert = new Node(row , col - 1);
                 break;
-                
-            
         }
-        body.add(0, insert);
+        insertFirstNode(insert);
         if (remainingNodesToCreate == 0) {
-            body.remove(body.size() - 1);
+            removeLastNode();
         } else {
             remainingNodesToCreate--;
         }
-
     }
+   
+    private void insertFirstNode(Node node) {
+        body.add(0, node);
+    }
+   
+    private void removeLastNode() {
+        body.remove(body.size() - 1);
+    }
+    
+    public boolean contains(int row, int col) {
+        for (Node node: body) {
+            if (node.getRow() == row && node.getCol() == col) {
+                return true;
+            }
+        }
+        return false;
+}
+
 
     public void setRemainingNodesToCreate(int remainingNodesToCreate) {
         this.remainingNodesToCreate += remainingNodesToCreate;

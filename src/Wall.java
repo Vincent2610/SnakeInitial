@@ -67,5 +67,14 @@ public class Wall {
             Util.drawSquare(g2d, node.getRow(), node.getCol(), squareWidth, squareHeight, new Color(153, 102, 0));
         }
     }
+    
+    public boolean contains(int row, int col) {
+        for (Node node: walls1) {
+            if (node.getRow() == row && node.getCol() == col) {
+                return true;
+            }
+        }
+        return false;
+}
 
 }
