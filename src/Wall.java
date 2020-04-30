@@ -95,9 +95,13 @@ public class Wall {
                 while ((line = in.readLine()) != null) {
                     String[] coordenates = line.split(";");
                     int initRow = Integer.parseInt(coordenates[0]);
+                    System.out.println(initRow);
                     int initCol = Integer.parseInt(coordenates[1]);
+                    System.out.println(initCol);
                     int destRow = Integer.parseInt(coordenates[2]);
+                    System.out.println(destRow);
                     int destCol = Integer.parseInt(coordenates[3]);
+                    System.out.println(destCol);
                     makeNodes(initRow,initCol,destRow,destCol);
                 }
             } finally {
@@ -110,8 +114,8 @@ public class Wall {
     }
     
     private void makeNodes(int initRow, int initCol, int endRow, int endCol) {
-       for (int row = initRow; row < endRow; row++) {
-           for (int col = initCol; col < endCol; col++) {
+       for (int row = initRow; row <= endRow; row++) {
+           for (int col = initCol; col <= endCol; col++) {
                currentMap.add(new Node(row, col));
            }
        }

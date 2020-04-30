@@ -19,6 +19,8 @@ import javax.swing.Timer;
  */
 public class Board extends javax.swing.JPanel {
 
+    
+
     class MyKeyAdapter extends KeyAdapter {
 
         @Override
@@ -55,6 +57,7 @@ public class Board extends javax.swing.JPanel {
 
     private int numRows;
     private int numCols;
+    private int levelSelected;
     private int deltaTime;
     private int foodDeltaTime;
     private int timesLevelUp;
@@ -108,8 +111,8 @@ public class Board extends javax.swing.JPanel {
                 }
                 
                 snake.move();
-                if(!createdMap){
-                    walls.insetNodes();
+                if(!createdMap && scoreBoard.getScore() > SCOREWALL){
+                    walls.mapChosen(levelSelected);
                     createdMap=true;
                 }
                 levelUpVelocity();
@@ -141,8 +144,6 @@ public class Board extends javax.swing.JPanel {
 
         MyKeyAdapter keyAdepter = new MyKeyAdapter();
         addKeyListener(keyAdepter);
-        /*snakeTimer.start();
-        specialFoodTimer.start();*/
     }
 
     private void myInit() {
@@ -154,20 +155,21 @@ public class Board extends javax.swing.JPanel {
         foodDeltaTime = 15000;
         specialFoodVisible = false;
         timesLevelUp = 1;
+        //levelSelected;
     }
 
     public void initGame() {
-        resetGame();
+        myInit();
         startTimers();
         scoreBoard.setScore(0);
     }
 
-    private void resetGame() {
-        snake = new Snake(24, 24, 4);
-    }
-
     void takePlayerName(String playerName) {
         this.playerName = playerName;
+    }
+    
+    void takeLevelMap(int levelSelected) {
+        this.levelSelected=levelSelected;
     }
 
     private void levelUpVelocity() {
