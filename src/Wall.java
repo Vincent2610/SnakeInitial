@@ -94,14 +94,10 @@ public class Wall {
                 String line;
                 while ((line = in.readLine()) != null) {
                     String[] coordenates = line.split(";");
-                    int initRow = Integer.parseInt(coordenates[0]);
-                    System.out.println(initRow);
+                    int initRow = Integer.parseInt(coordenates[0]);                   
                     int initCol = Integer.parseInt(coordenates[1]);
-                    System.out.println(initCol);
                     int destRow = Integer.parseInt(coordenates[2]);
-                    System.out.println(destRow);
                     int destCol = Integer.parseInt(coordenates[3]);
-                    System.out.println(destCol);
                     makeNodes(initRow,initCol,destRow,destCol);
                 }
             } finally {
