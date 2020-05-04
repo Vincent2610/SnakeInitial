@@ -151,7 +151,7 @@ public class Board extends javax.swing.JPanel {
         walls = new Wall(snake.getList());
         food = new Food(snake, false,walls);
         createdMap = false;
-        deltaTime = 250;
+        deltaTime = 200;
         foodDeltaTime = 15000;
         specialFoodVisible = false;
         timesLevelUp = 1;
@@ -164,11 +164,8 @@ public class Board extends javax.swing.JPanel {
         scoreBoard.setScore(0);
     }
 
-    void takePlayerName(String playerName) {
+    void takeStartGameFields(String playerName,int levelSelected) {
         this.playerName = playerName;
-    }
-    
-    void takeLevelMap(int levelSelected) {
         this.levelSelected=levelSelected;
     }
 
@@ -238,10 +235,7 @@ public class Board extends javax.swing.JPanel {
 
     public void updateScores() throws IOException {
         Player p = new Player(playerName, scoreBoard.getScore());
-        startGame.makeList(p);
-        startGame.orderList();
-        startGame.saveList();
-        startGame.printList();
+        startGame.startGameCalls(p);
     }
 
     public boolean colideBorders() {

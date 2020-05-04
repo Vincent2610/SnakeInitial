@@ -49,11 +49,19 @@ public class StartGame extends javax.swing.JDialog {
         jLabel1.setFont(new Font("Serif", Font.PLAIN, 20));
         
     }
+    
+    public void startGameCalls(Player player) throws IOException{
+         currentPlayer = player;
+         makeList();
+         orderList();
+         saveList();
+         printList();
+    }
 
-   public void makeList(Player player) throws IOException {
+   private void makeList() throws IOException {
         players = new ArrayList<Player>();
-        currentPlayer = player;
-        players.add(player);
+       
+        players.add(currentPlayer);
 
         ObjectInputStream in = null;
 
@@ -77,17 +85,14 @@ public class StartGame extends javax.swing.JDialog {
         }
     }
 
-    public void orderList() {
+    private void orderList() {
         Collections.sort(players);
         while (players.size() > 5) {
             players.remove(players.size() - 1);
         }
-        for (Player p : players) {
-            System.out.println(p);
-        }
     }
 
-    public void saveList() throws IOException {
+    private void saveList() throws IOException {
 
         ObjectOutputStream out = null;
         try {
@@ -104,8 +109,9 @@ public class StartGame extends javax.swing.JDialog {
             }
         }
 }
+    
 
-    public void printList() {
+    private void printList() {
         String finalScores = "";
         jLabel3.setText("Your score is " + currentPlayer.getScore());
 
@@ -116,6 +122,8 @@ public class StartGame extends javax.swing.JDialog {
 
         this.setVisible(true);
     }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -234,8 +242,7 @@ public class StartGame extends javax.swing.JDialog {
     private void startGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startGameButtonActionPerformed
         if (!jTextField1.getText().trim().equalsIgnoreCase("") && jTextField1.getText() != null) {
             playerName = jTextField1.getText();
-            board.takePlayerName(playerName);
-            board.takeLevelMap(jComboBox3.getSelectedIndex());
+            board.takeStartGameFields(playerName,jComboBox3.getSelectedIndex());
             board.initGame();
             this.setVisible(false);
         } else {
