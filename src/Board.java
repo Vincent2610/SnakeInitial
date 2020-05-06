@@ -27,23 +27,27 @@ public class Board extends javax.swing.JPanel {
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
-                    if (snake.getDirection() != Direction.RIGHT) {
+                    if (snake.getDirection() != Direction.RIGHT && setDirection) {
                         snake.setDirection(Direction.LEFT);
+                        setDirection=false;
                     }
                     break;
                 case KeyEvent.VK_RIGHT:
-                    if (snake.getDirection() != Direction.LEFT) {
+                    if (snake.getDirection() != Direction.LEFT && setDirection) {
                         snake.setDirection(Direction.RIGHT);
+                        setDirection=false;
                     }
                     break;
                 case KeyEvent.VK_UP:
-                    if (snake.getDirection() != Direction.DOWN) {
+                    if (snake.getDirection() != Direction.DOWN && setDirection) {
                         snake.setDirection(Direction.UP);
+                        setDirection=false;
                     }
                     break;
                 case KeyEvent.VK_DOWN:
-                    if (snake.getDirection() != Direction.UP) {
+                    if (snake.getDirection() != Direction.UP && setDirection) {
                         snake.setDirection(Direction.DOWN);
+                        setDirection=false;
                     }
                     break;
                 case KeyEvent.VK_P:
@@ -61,6 +65,7 @@ public class Board extends javax.swing.JPanel {
     private int deltaTime;
     private int foodDeltaTime;
     private int timesLevelUp;
+    private boolean setDirection;
     private boolean specialFoodVisible;
     private boolean createdMap;
     private String playerName;
@@ -116,6 +121,7 @@ public class Board extends javax.swing.JPanel {
                     createdMap=true;
                 }
                 levelUpVelocity();
+                setDirection=true;
                 repaint();
                 //}
 
@@ -147,6 +153,7 @@ public class Board extends javax.swing.JPanel {
     }
 
     private void myInit() {
+        setDirection = true;
         snake = new Snake(24, 24, 4);
         walls = new Wall(snake.getList());
         food = new Food(snake, false,walls);
